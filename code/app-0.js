@@ -62,19 +62,30 @@ function draw() {
   drawBall()
   drawPaddle()
 
-  // check for collisions
+  // check for collisions on the x axis
   if (x + deltaX > canvas.width - ballRadius || x + deltaX < ballRadius) {
     deltaX = -deltaX
   }
 
-  if (y + deltaY < ballRadius) {
+  // check for collisions on the y axis and paddle
+  // if (y + deltaY < ballRadius) {
+  //   deltaY = -deltaY
+  // }
+  if(
+    y + deltaY < ballRadius || 
+    (
+      y + deltaY > canvas.height - paddleHeight - ballRadius &&
+      x + deltaX > paddleX &&
+      x + deltaX < paddleX + paddleWidth
+    )
+  ) {
     deltaY = -deltaY
   }
 
-  // paddle movement
-  if (rightPressed) {
+  // paddle movement and canvas boundaries
+  if (rightPressed && (paddleX + paddleWidth) < canvas.width) {
     paddleX += paddleDeltaX
-  } else if (leftPressed) {
+  } else if (leftPressed && paddleX > 0) {
     paddleX -= paddleDeltaX
   }
 
