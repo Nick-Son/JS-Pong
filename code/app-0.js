@@ -64,6 +64,7 @@ function draw() {
 
   // check for collisions on the x axis
   if (x + deltaX > canvas.width - ballRadius || x + deltaX < ballRadius) {
+    // change X direction
     deltaX = -deltaX
   }
 
@@ -72,14 +73,21 @@ function draw() {
   //   deltaY = -deltaY
   // }
   if(
+    // top wall check
     y + deltaY < ballRadius || 
     (
+      // paddle check
       y + deltaY > canvas.height - paddleHeight - ballRadius &&
+      // left boundary of the paddle
       x + deltaX > paddleX &&
+      // right boundary of the paddle
       x + deltaX < paddleX + paddleWidth
     )
   ) {
+    // change Y direction
     deltaY = -deltaY
+  } else if (y + deltaY > canvas.height) {
+    location.reload()
   }
 
   // paddle movement and canvas boundaries
