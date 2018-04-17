@@ -5,7 +5,7 @@ var ctx = canvas.getContext('2d')
 var x = canvas.width / 2
 var y = canvas.height - 30
 var ballRadius = 10
-// ball direction
+// ball direction movement
 var deltaX = 2
 var deltaY = -2
 
@@ -13,6 +13,30 @@ var deltaY = -2
 var paddleHeight = 10
 var paddleWidth = 75
 var paddleX = (canvas.width - paddleWidth) / 2
+// paddle movement
+var paddleDeltaX = 7
+
+var rightPressed
+var leftPressed
+
+function keyDownHandler(event) {
+  if(event.keyCode == 39) {
+    rightPressed = true
+  } else if (event.keyCode == 37) {
+    leftPressed = true
+  }
+}
+
+function keyUpHandler(event) {
+  if(event.keyCode == 39) {
+    rightPressed = false
+  } else if (event.keyCode == 37) {
+    leftPressed = false
+  }
+}
+
+document.addEventListener('keydown', keyDownHandler, false)
+document.addEventListener('keyup', keyUpHandler, false)
 
 function drawBall() {
   ctx.beginPath()
@@ -45,6 +69,13 @@ function draw() {
 
   if (y + deltaY < ballRadius) {
     deltaY = -deltaY
+  }
+
+  // paddle movement
+  if (rightPressed) {
+    paddleX += paddleDeltaX
+  } else if (leftPressed) {
+    paddleX -= paddleDeltaX
   }
 
   // move the position of the ball, by changing the value of the balls origin point
