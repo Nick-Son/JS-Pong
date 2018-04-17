@@ -9,6 +9,11 @@ var ballRadius = 10
 var deltaX = 2
 var deltaY = -2
 
+// paddle dimensions
+var paddleHeight = 10
+var paddleWidth = 75
+var paddleX = (canvas.width - paddleWidth) / 2
+
 function drawBall() {
   ctx.beginPath()
   ctx.arc(x, y, ballRadius, 0, Math.PI*2)
@@ -17,12 +22,21 @@ function drawBall() {
   ctx.closePath()
 }
 
+function drawPaddle() {
+  ctx.beginPath()
+  ctx.rect(paddleX, canvas.height - paddleHeight, paddleWidth, paddleHeight)
+  ctx.fillStyle = "black"
+  ctx.fill()
+  ctx.closePath()
+}
+
 function draw() {
   // clears the canvas after the ball is drawn, thus removing each proir ball that is drawn
   ctx.clearRect(0, 0, canvas.width, canvas.height)
 
-  // draw ball
+  // draw ball & paddle
   drawBall()
+  drawPaddle()
 
   // check for collisions
   if (x + deltaX > canvas.width - ballRadius || x + deltaX < ballRadius) {
