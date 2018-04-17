@@ -1,11 +1,13 @@
 var canvas = document.getElementById('gameCanvas')
 var ctx = canvas.getContext('2d')
 
+// ball dimesnions
 var x = canvas.width / 2
 var y = canvas.height - 30
+var ballRadius = 10
+// ball direction
 var deltaX = 2
 var deltaY = -2
-var ballRadius = 10
 
 function drawBall() {
   ctx.beginPath()
@@ -18,9 +20,18 @@ function drawBall() {
 function draw() {
   // clears the canvas after the ball is drawn, thus removing each proir ball that is drawn
   ctx.clearRect(0, 0, canvas.width, canvas.height)
-  
+
   // draw ball
   drawBall()
+
+  // check for collisions
+  if (x + deltaX > canvas.width - ballRadius || x + deltaX < ballRadius) {
+    deltaX = -deltaX
+  }
+
+  if (y + deltaY < ballRadius) {
+    deltaY = -deltaY
+  }
 
   // move the position of the ball, by changing the value of the balls origin point
   x += deltaX
